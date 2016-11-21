@@ -10,7 +10,7 @@ public class Main {
 		// TODO Auto-generated method stub
 
 		System.out.println("Starting...");
-		
+
 		Scanner sc = new Scanner(System.in);
 
 		Document doc = Jsoup.connect("http://www.metrolyrics.com/rigamortis-lyrics-kendrick-lamar.html").get();
@@ -34,25 +34,24 @@ public class Main {
 		System.out.println(s.verses[3].verse);
 		System.out.println("DONE");
 		int counter = 0;
-		for(Verse a : s.verses){
-			for(ArrayList<Integer> b : a.alliteration){
+		for (Verse a : s.verses) {
+			for (ArrayList<Integer> b : a.alliteration) {
 				System.out.println((char) (counter + 'A') + " " + b);
 				counter++;
 			}
 			counter = 0;
-			
+
 		}
 		System.out.println("Collection");
 
-
-		for(ArrayList<Integer> b : s.verses[3].collection){
-			System.out.println(b);
+		for (Verse a : s.verses) {
+			for (ArrayList<Integer>  b: a.collection) {
+				System.out.println(b);
+			}
 		}
 
 		System.out.println("done");
 
-		
-		
 	}
 
 }

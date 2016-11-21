@@ -29,12 +29,6 @@ public class Verse {
 
 		for (int i = 0; i < numWords; i++) {
 
-			char[] letters = strWords[i].toCharArray();
-			char firstLetter = letters[0];
-			char ch = 'h';
-			int pos = ch - 'a' + 1;
-			int index = firstLetter - 'a' + 1;
-
 			words[i] = new Word(strWords[i]);
 
 		}
@@ -61,28 +55,30 @@ public class Verse {
 			}
 		}
 
+		int counter = 0;
 		for (ArrayList<Integer> curLetter : alliteration) {
 			for (int zero : curLetter) {
 				ArrayList<Integer> temp = new ArrayList<Integer>();
 
 				int zeroIndex = zero;
 
-				temp = close(zeroIndex);
+				temp = close(zeroIndex, counter);
 
 				if (temp.size() > 2) {
 					collection.add(temp);
 				}
 
 			}
+			counter++;
 		}
 
 	}
 
-	public ArrayList<Integer> close(int zeroIndex) {
+	public ArrayList<Integer> close(int zeroIndex, int counter) {
 		ArrayList<Integer> indicies = new ArrayList<Integer>();
-		for (int k = 0; k < alliteration.get(12).size(); k++) {
-			if (Math.abs((alliteration.get(12).get(k) - zeroIndex)) < 4) {
-				indicies.add(alliteration.get(12).get(k));
+		for (int k = 0; k < alliteration.get(counter).size(); k++) {
+			if (Math.abs((alliteration.get(counter).get(k) - zeroIndex)) < 4) {
+				indicies.add(alliteration.get(counter).get(k));
 			}
 		}
 		return indicies;
