@@ -10,12 +10,18 @@ public class Verse {
 	String verse;
 	ArrayList<ArrayList<Integer>> alliteration = new ArrayList<ArrayList<Integer>>();
 	// index corresponds to the letter in the alphabet (0-25)
+	ArrayList<ArrayList<String>> collectionStr = new ArrayList<ArrayList<String>>();
 
 	ArrayList<ArrayList<Integer>> collection = new ArrayList<ArrayList<Integer>>();
 
 	ArrayList<String[]> rhymePairs = new ArrayList<String[]>();
 
+	int wordLengthThreshold;
+
 	Verse(String s) throws Exception {
+
+		wordLengthThreshold = 1;
+
 		verse = s;
 		strWords = s.split(" ");
 		numWords = strWords.length;
@@ -43,7 +49,7 @@ public class Verse {
 
 		for (int i = 0; i < numWords; i++) {
 
-			if (strWords[i].length() > 3) {
+			if (strWords[i].length() > wordLengthThreshold) {
 				char[] letters = strWords[i].toLowerCase().toCharArray();
 				char firstLetter = letters[0];
 				int index = firstLetter - 'a';
@@ -57,31 +63,53 @@ public class Verse {
 
 		int counter = 0;
 		for (ArrayList<Integer> curLetter : alliteration) {
-			for (int zero : curLetter) {
-				ArrayList<Integer> temp = new ArrayList<Integer>();
+			// for (int zero : curLetter) {
+			ArrayList<ArrayList<Integer>> tempDouble = new ArrayList<ArrayList<Integer>>();
+			ArrayList<Integer> temp = new ArrayList<Integer>();
+			ArrayList<String> tempStr = new ArrayList<>();
+			// int zeroIndex = zero;
 
-				int zeroIndex = zero;
+			tempDouble = close(curLetter);
 
-				temp = close(zeroIndex, counter);
-
+			for (int t = 0; t < tempDouble.size(); t++) {
+				temp = tempDouble.get(t);
 				if (temp.size() > 2) {
 					collection.add(temp);
+
+					for (int w = 0; w < temp.size(); w++) {
+
+						tempStr.add(strWords[temp.get(w)]);
+
+					}
+					collectionStr.add(tempStr);
 				}
 
 			}
+			// }
 			counter++;
 		}
 
 	}
 
-	public ArrayList<Integer> close(int zeroIndex, int counter) {
+	public ArrayList<ArrayList<Integer>> close(ArrayList<Integer> letterIndex) {
 		ArrayList<Integer> indicies = new ArrayList<Integer>();
-		for (int k = 0; k < alliteration.get(counter).size(); k++) {
-			if (Math.abs((alliteration.get(counter).get(k) - zeroIndex)) < 4) {
-				indicies.add(alliteration.get(counter).get(k));
+		ArrayList<ArrayList<Integer>> indiciesd = new ArrayList<ArrayList<Integer>>();
+
+		for (int i = 1; i < letterIndex.size(); i++) {
+
+			if (Math.abs((letterIndex.get(i) - letterIndex.get(i - 1))) < 4) {
+				if (indicies.isEmpty()) {
+					indicies.add(letterIndex.get(i - 1));
+				}
+				indicies.add(letterIndex.get(i));
+			} else {
+				indiciesd.add((ArrayList<Integer>) indicies.clone());
+				indicies.clear();
 			}
+
 		}
-		return indicies;
+
+		return indiciesd;
 
 	}
 

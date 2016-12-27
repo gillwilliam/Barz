@@ -28,6 +28,7 @@ public class AlliterationTest {
 
 		for (int i = 0; i < strWords.length; i++) {
 
+			
 			if (strWords[i].length() > 3) {
 				char[] letters = strWords[i].toLowerCase().toCharArray();
 				char firstLetter = letters[0];
