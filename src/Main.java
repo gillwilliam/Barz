@@ -13,47 +13,72 @@ public class Main {
 
 		Scanner sc = new Scanner(System.in);
 
-		Document doc = Jsoup.connect("http://www.metrolyrics.com/rigamortis-lyrics-kendrick-lamar.html").get();
+		System.out.println("Enter song title: ");
+		String songTitle = sc.nextLine();
+
+		String[] songTitleArr = songTitle.split(" ");
+		String songTitlehyph = songTitleArr[0];
+
+		if(songTitleArr.length > 1) {
+			for (int i = 1; i < songTitleArr.length; i++) {
+				songTitlehyph += "-";
+				songTitlehyph += songTitleArr[i];
+
+			}
+		}
+
+		System.out.println("Enter artist name: ");
+		String artistName = sc.nextLine();
+
+		String[] artistNameArr = artistName.split(" ");
+
+		String artistNamehyph = artistNameArr[0];
+
+		if(artistNameArr.length > 1) {
+			for (int i = 1; i < artistNameArr.length; i++) {
+				artistNamehyph += "-";
+				artistNamehyph += artistNameArr[i];
+
+			}
+		}
+
+		//System.out.println("http://www.metrolyrics.com/" + songTitle + "-lyrics-" + artistNamehyph + ".html");
+		Document doc = Jsoup.connect("http://www.metrolyrics.com/" + songTitlehyph + "-lyrics-" + artistNamehyph + ".html").get();
+		//Document doc = Jsoup.connect("http://www.metrolyrics.com/rigamortis-lyrics-kendrick-lamar.html").get();
 
 		// Document doc =
 		// Jsoup.connect("http://www.metrolyrics.com/hotel-california-lyrics-the-eagles.html").get();
 
 		Song s = new Song(doc);
 
-		// for (Verse v : s.verses) {
-		// System.out.println(v.verse);
-		// System.out.println("END BAR");
-		// }
-
-		// for (Verse v : s.verses) { ArrayList<String[]> rhyme = v.rhymePairs;
-		// for (String[] c : rhyme) { System.out.println(c[0] + " " + c[1]);
-		//
-		// } }
-		//
-		// for (String[] a : s.totRhymePairs) { System.out.println(a[0] + " " +
-		// a[1]); }
-
-		// System.out.println(s.verses[3].verse);
-		// System.out.println("DONE");
-		// int counter = 0;
-		// for (Verse a : s.verses) {
-		// for (ArrayList<Integer> b : a.alliteration) {
-		// System.out.println((char) (counter + 'A') + " " + b);
-		// counter++;
-		// }
-		// counter = 0;
-		//
-		// }
+		printRhymes(s);
 		System.out.println("Collection");
+		printAlliterations(s);
 
+
+
+
+
+		System.out.println("done");
+
+	}
+
+	static void printRhymes(Song s){
+		for (Verse v : s.verses) { ArrayList<String[]> rhyme = v.rhymePairs;
+			for (String[] c : rhyme) { System.out.println(c[0] + " " + c[1]);
+
+			} }
+
+		for (String[] a : s.totRhymePairs) { System.out.println(a[0] + " " +
+				a[1]); }
+	}
+
+	static void printAlliterations(Song s){
 		for (Verse a : s.verses) {
 			for (ArrayList<String> b : a.collectionStr) {
 				System.out.println(b);
 			}
 		}
-
-		System.out.println("done");
-
 	}
 
 }
