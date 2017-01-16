@@ -42,12 +42,8 @@ public class Main {
 			}
 		}
 
-		//System.out.println("http://www.metrolyrics.com/" + songTitle + "-lyrics-" + artistNamehyph + ".html");
 		Document doc = Jsoup.connect("http://www.metrolyrics.com/" + songTitlehyph + "-lyrics-" + artistNamehyph + ".html").get();
-		//Document doc = Jsoup.connect("http://www.metrolyrics.com/rigamortis-lyrics-kendrick-lamar.html").get();
 
-		// Document doc =
-		// Jsoup.connect("http://www.metrolyrics.com/hotel-california-lyrics-the-eagles.html").get();
 
 		Song s = new Song(doc);
 
